@@ -15,14 +15,12 @@ const Form = () => {
       subject,
     };
     tg.sendData(JSON.stringify(data));
-  }, []);
+  }, [country, street, subject, tg]);
 
   useEffect(() => {
     tg.onEvent("mainButtonClicked", onSendData);
-    return () => {
-      tg.offEvent("mainButtonClicked", onSendData);
-    };
-  }, []);
+    return () => tg.offEvent("mainButtonClicked", onSendData);
+  }, [onSendData, tg]);
 
   useEffect(() => {
     tg.MainButton.setParams({
@@ -36,7 +34,7 @@ const Form = () => {
     } else {
       tg.MainButton.show();
     }
-  }, []);
+  }, [street, country, tg]);
 
   const onChangeCountry = (e) => {
     setCountry(e.target.value);
